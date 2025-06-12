@@ -1,0 +1,102 @@
+:root {
+    --primary-color: #10B981;
+    --secondary-color: #059669;
+    --bg-start: #F0FDF4;
+    --bg-end: #D1FAE5;
+    --glass-bg: rgba(255, 255, 255, 0.25);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bg-gradient {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.glass-effect {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #333;
+}
+
+
+.btn-primary {
+    padding: 12px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+}
+
+/* Header Styles */
+.app-header {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.profile-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    min-height: 56px;
+    transition: transform 0.2s;
+    cursor: pointer;
+    border-radius: 9999px;
+    overflow: hidden;
+    background-color: var(--primary-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container:hover {
+    transform: scale(1.05);
+}
+
+
+
+
+
+
+

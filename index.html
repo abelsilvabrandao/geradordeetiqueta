@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gerador de Etiquetas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="ship.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root {
+      --primary-green: #059669;
+      --primary-dark: #047857;
+      --neutral-50: #f8fafc;
+      --neutral-100: #f1f5f9;
+      --neutral-200: #e2e8f0;
+      --neutral-800: #1e293b;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--neutral-50) 0%, var(--neutral-100) 100%);
+      color: var(--neutral-800);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .header-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      width: 200px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+
+    .welcome-header {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+      margin: 0;
+    }
+
+    .instructions {
+      background: rgba(5, 150, 105, 0.1);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border: 1px solid rgba(5, 150, 105, 0.2);
+    }
+
+    .instructions h2 {
+      color: var(--primary-dark);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .instructions ol {
+      padding-left: 1.5rem;
+      margin: 0;
+    }
+
+    .instructions li {
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+      color: var(--neutral-800);
+    }
+
+    .instructions .file-format {
+      background: rgba(5, 150, 105, 0.05);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .instructions .file-format h3 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary-dark);
+    }
+
+    .instructions .important-notes {
+      background: rgba(5, 150, 105, 0.15);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+      border-left: 4px solid var(--primary);
+    }
+
+    .instructions .important-notes p {
+      margin: 0 0 0.5rem 0;
+      color: var(--primary-dark);
+    }
+
+    .instructions .important-notes ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+
+    .instructions .important-notes li {
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .instructions .important-notes li:last-child {
+      margin-bottom: 0;
+    }
+
+    .footer {
+      background: rgba(5, 150, 105, 0.1);
+      backdrop-filter: blur(10px);
+      color: var(--neutral-800);
+      padding: 1.5rem 0;
+      margin-top: 4rem;
+      text-align: center;
+      border-radius: 1rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .footer-content {
+      padding: 0 2rem;
+    }
+
+    .footer p {
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .form-container {
+      background: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--neutral-800);
+    }
+
+    .form-group input[type="file"] {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px dashed var(--neutral-200);
+      border-radius: 0.5rem;
+      background: var(--neutral-50);
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input[type="file"]:hover {
+      border-color: var(--primary-green);
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .btn-primary, .btn-secondary {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.2s;
+      cursor: pointer;
+      min-width: 120px;
+    }
+
+    .btn-primary {
+      background: var(--primary-green);
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--neutral-100);
+      color: var(--neutral-800);
+      border: 1px solid var(--neutral-200);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--neutral-200);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary:disabled, .btn-secondary:disabled {
+      opacity: 0.6;
+      cursor: default;
+      pointer-events: none;
+    }
+
+    #etiquetas {
+      display: flex;
+      flex-direction: column;
+      gap: 20mm;
+      padding: 20mm;
+      background: var(--neutral-100);
+      border-radius: 1rem;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+    @media print {
+      #etiquetas {
+        padding: 0;
+        gap: 0;
+        background: none;
+      }
+      .pagina {
+        margin: 0;
+        box-shadow: none;
+      }
+    }
+    .pagina {
+      width: 210mm;
+      height: 297mm;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(9, 1fr);
+      gap: 4mm;
+      padding: 10mm;
+      box-sizing: border-box;
+      page-break-after: always;
+      break-after: page;
+      background: white;
+      margin: 0 auto;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .pagina:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+    }
+    .etiqueta {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #000;
+      padding: 2mm;
+      text-align: center;
+      min-height: 25mm;
+    }
+    .etiqueta strong {
+      display: inline;
+      color: #1F2937;
+      font-size: 9pt;
+      margin-right: 4px;
+    }
+    .etiqueta-line {
+      margin: 0.5mm 0;
+      width: 100%;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .etiqueta-line span {
+      font-weight: normal;
+      font-size: 8pt;
+    }
+    .etiqueta-line strong {
+      font-weight: bold;
+      font-size: 9pt;
+      margin-left: 2px;
+      line-height: 1.1;
+    }
+    .btn-container {
+      margin-top: 20px;
+      display: flex;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body class="bg-gradient">
+  <div class="container">
+    <div class="header-container">
+      <img src="logo.png" alt="Intermarítima Logo" class="logo" />
+      <h1 class="welcome-header">Gerador de Etiquetas</h1>
+    </div>
+
+    <div class="form-container glass-effect">
+      <div class="form-group">
+        <label for="excelFile">Selecione o arquivo Excel (.xlsx):</label>
+        <input type="file" id="excelFile" accept=".xlsx" />
+      </div>
+      <div class="btn-container">
+        <button id="btnVisualizar" class="btn-primary" disabled>Visualizar</button>
+        <button id="btnGerar" class="btn-primary" disabled>Gerar PDF</button>
+        <button id="btnLimpar" class="btn-secondary" disabled>Limpar</button>
+      </div>
+    </div>
+
+    <div id="etiquetas" class="etiquetas-container"></div>
+
+    <div class="instructions">
+      <h2>Como usar o Gerador de Etiquetas</h2>
+      <ol>
+        <li>Prepare seu arquivo Excel (.xlsx) seguindo o formato padrão abaixo</li>
+        <li>Clique em "Escolher arquivo" e selecione seu arquivo Excel</li>
+        <li>Clique em "Visualizar" para conferir as etiquetas geradas</li>
+        <li>Verifique se todos os dados estão corretos na visualização</li>
+        <li>Clique em "Gerar PDF" para baixar o arquivo para impressão</li>
+      </ol>
+      <div class="file-format">
+        <h3>Formato do Arquivo Excel</h3>
+        <p>Na primeira linha do Excel, configure o cabeçalho exatamente assim:</p>
+        <ul>
+          <li><strong>Coluna A:</strong> Navio__VG_ (Nome do navio)</li>
+          <li><strong>Coluna B:</strong> ETA (Data no formato DD/MM/AAAA)</li>
+          <li><strong>Coluna C:</strong> CLIENTE (Cliente/Importador)</li>
+        </ul>
+        <div class="important-notes">
+          <p><strong>Atenção:</strong></p>
+          <ul>
+            <li>A partir da linha 2, insira os dados em <strong>CAIXA ALTA (MAIÚSCULO)</strong></li>
+            <li>Evite espaços em branco antes e depois dos textos</li>
+            <li>O nome das colunas deve ser <strong>EXATAMENTE</strong> como mostrado acima</li>
+            <li>Datas devem estar no formato DD/MM/AAAA (exemplo: 09/06/2025)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; <span id="currentYear"></span> Intermarítima. Todos os direitos reservados.</p>
+      <p>Desenvolvido por Abel Silva Brandão | Versão 1.0.0</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    // Inicializa o jsPDF
+    window.jsPDF = window.jspdf.jsPDF;
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
