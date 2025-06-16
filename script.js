@@ -11,6 +11,7 @@ function atualizarAno() {
 document.addEventListener('DOMContentLoaded', atualizarAno);
 
 let dadosExcel = [];
+let updatePageCounter = null;
 
 function excelDateToJSDate(serial) {
   // Excel date serial to JS Date
@@ -85,6 +86,58 @@ function renderEtiquetas(dados) {
   const container = document.getElementById("etiquetas");
   container.innerHTML = "";
   const porPagina = 27;
+
+  // Configurar contador de páginas
+  const totalPaginas = Math.ceil(dados.length / porPagina);
+  const pageCounter = document.getElementById("pageCounter");
+  pageCounter.innerHTML = `Página 1 de ${totalPaginas}`;
+
+  // Função para atualizar o contador de páginas
+  updatePageCounter = () => {
+    const paginas = document.querySelectorAll('.pagina');
+    if (!paginas.length) return;
+
+    const previewSection = document.querySelector('.preview-section');
+    const viewportHeight = previewSection.clientHeight;
+    const scrollTop = previewSection.scrollTop;
+    const scrollBottom = scrollTop + viewportHeight;
+
+    let currentPage = 1;
+    const threshold = viewportHeight * 0.5; // 50% da altura da viewport
+
+    paginas.forEach((pagina, index) => {
+      // Usar offsetTop para posição absoluta em relação ao container
+      const pageTop = pagina.offsetTop;
+      const pageBottom = pageTop + pagina.offsetHeight;
+      
+      // Calcular sobreposição com a viewport
+      const overlap = Math.min(scrollBottom, pageBottom) - Math.max(scrollTop, pageTop);
+      
+      // Se a página está mais de 50% visível na viewport
+      if (overlap > threshold) {
+        currentPage = index + 1;
+      }
+    });
+
+    const prevContent = pageCounter.innerHTML;
+    const newContent = `Página ${currentPage} de ${totalPaginas}`;
+    if (prevContent !== newContent) {
+      pageCounter.innerHTML = newContent;
+      pageCounter.style.opacity = "0.6";
+      setTimeout(() => {
+        pageCounter.style.opacity = "1";
+      }, 200);
+    }
+  };
+
+  // Garantir que o contador seja atualizado em diferentes eventos
+  window.addEventListener('resize', updatePageCounter);
+  document.addEventListener('DOMContentLoaded', updatePageCounter);
+
+  // Adicionar listener de scroll na preview-section
+  document.querySelector('.preview-section').addEventListener('scroll', updatePageCounter);
+  // Atualizar contador após um pequeno delay para garantir que as páginas foram renderizadas
+  setTimeout(updatePageCounter, 100);
 
   for (let i = 0; i < dados.length; i += porPagina) {
     const pagina = document.createElement("div");
@@ -248,4 +301,20 @@ document.getElementById("btnLimpar").addEventListener("click", () => {
   document.getElementById("btnVisualizar").disabled = true;
   document.getElementById("btnGerar").disabled = true;
   document.getElementById("btnLimpar").disabled = true;
+  
+  // Restaurar o texto padrão do contador de páginas
+  const pageCounter = document.getElementById("pageCounter");
+  if (pageCounter) {
+    pageCounter.innerHTML = "Visualizador de Páginas";
+  }
+  
+  // Remover todos os listeners do contador
+  if (updatePageCounter) {
+    window.removeEventListener('resize', updatePageCounter);
+    document.removeEventListener('DOMContentLoaded', updatePageCounter);
+    const previewSection = document.querySelector('.preview-section');
+    if (previewSection) {
+      previewSection.removeEventListener('scroll', updatePageCounter);
+    }
+  }
 });

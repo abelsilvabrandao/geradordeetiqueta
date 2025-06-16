@@ -9,7 +9,7 @@
   <style>
     :root {
       --primary-green: #059669;
-      --primary-dark: #047857;
+      --primary-dark: #059669;
       --neutral-50: #f8fafc;
       --neutral-100: #f1f5f9;
       --neutral-200: #e2e8f0;
@@ -216,6 +216,60 @@
       pointer-events: none;
     }
 
+    .etiquetas-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20mm;
+      position: relative;
+      overflow: visible;
+    }
+
+    
+    .preview-section {
+      position: relative;
+      margin: 2rem 0;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 1rem;
+      backdrop-filter: blur(10px);
+      scrollbar-width: thin;
+      scrollbar-color: var(--primary-green) transparent;
+    }
+
+    .preview-section::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .preview-section::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .preview-section::-webkit-scrollbar-thumb {
+      background-color: var(--primary-green);
+      border-radius: 20px;
+      border: 2px solid transparent;
+    }
+
+    .page-counter {
+      position: sticky;
+      top: 0;
+      background: var(--primary-green);
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      font-weight: bold;
+      font-size: 1rem;
+      z-index: 100;
+      transition: all 0.3s ease-in-out;
+      width: fit-content;
+      margin: 0 auto 1rem;
+      letter-spacing: 0.5px;
+    }
+
+
     #etiquetas {
       display: flex;
       flex-direction: column;
@@ -224,6 +278,7 @@
       background: var(--neutral-100);
       border-radius: 1rem;
       box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+      overflow: hidden;
     }
     @media print {
       #etiquetas {
@@ -237,21 +292,24 @@
       }
     }
     .pagina {
-      width: 210mm;
-      height: 297mm;
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       grid-template-rows: repeat(9, 1fr);
       gap: 4mm;
       padding: 10mm;
       box-sizing: border-box;
-      page-break-after: always;
-      break-after: page;
+      page-break-after: auto !important;
+      break-after: auto !important;
       background: white;
-      margin: 0 auto;
+      padding: 20mm;
       border-radius: 0.5rem;
       box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
       transition: transform 0.2s;
+      scroll-margin-top: 5rem;
+      width: 210mm;
+      height: 297mm;
+      max-width: 100%;
+      flex-shrink: 0;
     }
 
     .pagina:hover {
@@ -316,7 +374,10 @@
       </div>
     </div>
 
-    <div id="etiquetas" class="etiquetas-container"></div>
+    <div class="preview-section">
+      <div id="pageCounter" class="page-counter">Visualizador de Páginas</div>
+      <div id="etiquetas" class="etiquetas-container"></div>
+    </div>
 
     <div class="instructions">
       <h2>Como usar o Gerador de Etiquetas</h2>
