@@ -103,21 +103,19 @@ function renderEtiquetas(dados) {
     const scrollBottom = scrollTop + viewportHeight;
 
     let currentPage = 1;
-    const threshold = viewportHeight * 0.5; // 50% da altura da viewport
-
-    paginas.forEach((pagina, index) => {
-      // Usar offsetTop para posição absoluta em relação ao container
+    
+    // Percorre as páginas para encontrar a primeira página visível
+    for (let i = 0; i < paginas.length; i++) {
+      const pagina = paginas[i];
       const pageTop = pagina.offsetTop;
       const pageBottom = pageTop + pagina.offsetHeight;
       
-      // Calcular sobreposição com a viewport
-      const overlap = Math.min(scrollBottom, pageBottom) - Math.max(scrollTop, pageTop);
-      
-      // Se a página está mais de 50% visível na viewport
-      if (overlap > threshold) {
-        currentPage = index + 1;
+      // Se a página está visível (parte superior ou inferior está na viewport)
+      if (pageTop < scrollBottom && pageBottom > scrollTop) {
+        currentPage = i + 1;
+        break;
       }
-    });
+    }
 
     const prevContent = pageCounter.innerHTML;
     const newContent = `Página ${currentPage} de ${totalPaginas}`;
