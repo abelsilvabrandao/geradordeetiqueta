@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <title>Gerador de Etiquetas</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" href="ship.png" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     :root {
       --primary-green: #059669;
@@ -179,13 +180,35 @@
     }
 
     .btn-primary, .btn-secondary {
-      padding: 0.75rem 1.5rem;
+      padding: 0.5rem 1rem;
       border-radius: 0.5rem;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.2s;
+      font-weight: 500;
       cursor: pointer;
-      min-width: 120px;
+      transition: all 0.2s ease-in-out;
+      text-align: center;
+      white-space: nowrap;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .btn-primary, .btn-secondary {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+      }
+
+      .btn-container {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .btn-container button {
+        width: 100%;
+      }
     }
 
     .btn-primary {
@@ -368,9 +391,9 @@
         <input type="file" id="excelFile" accept=".xlsx" />
       </div>
       <div class="btn-container">
-        <button id="btnVisualizar" class="btn-primary" disabled>Visualizar</button>
-        <button id="btnGerar" class="btn-primary" disabled>Gerar PDF</button>
-        <button id="btnLimpar" class="btn-secondary" disabled>Limpar</button>
+        <button id="btnVisualizar" class="btn-primary" disabled><i class="fas fa-eye"></i> Visualizar</button>
+        <button id="btnGerar" class="btn-primary" disabled><i class="fas fa-file-pdf"></i> Gerar PDF</button>
+        <button id="btnLimpar" class="btn-secondary" disabled><i class="fas fa-eraser"></i> Limpar</button>
       </div>
     </div>
 
